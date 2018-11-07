@@ -1,0 +1,8 @@
+#!/usr/bin/env sh
+
+perf script -F comm,pid,tid,cpu,time,event,ip,sym,dso,trace > perftrace
+echo "perftrace done"
+cat perftrace | /opt/FlameGraph/stackcollapse-perf.pl --pid > stackcollapse
+echo "stackcollapse done"
+cat stackcollapse | /opt/FlameGraph/flamegraph.pl --color=java --hash > flamegraph.svg
+echo "flamegraph done"

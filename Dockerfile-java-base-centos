@@ -1,0 +1,44 @@
+FROM centos:7.5.1804
+
+USER root
+
+ENV JAVA_MAJOR_VERSION=8
+
+# /dev/urandom is used as random source, which is prefectly safe
+# according to http://www.2uo.de/myths-about-urandom/
+RUN yum install -y \
+       java-1.8.0-openjdk-1.8.0.181-3.b13.el7_5 \ 
+       java-1.8.0-openjdk-devel-1.8.0.181-3.b13.el7_5 \ 
+    && echo "securerandom.source=file:/dev/urandom" >> /usr/lib/jvm/java/jre/lib/security/java.security
+RUN \
+    yum install --assumeyes --enablerepo='*debug*' java-1.8.0-openjdk-debuginfo
+RUN yum install -y unzip sudo
+RUN yum install -y perf
+
+ENV JAVA_HOME=/etc/alternatives/java_sdk
+
+ARG MYUSER_UID=500
+
+ENV DOCKER_BIN_DIR=/opt/docker/bin \
+    MYUSER_BASE=/usr/local/myuser \
+    MYUSER_USER_ID=${MYUSER_UID}
+
+ENV MYUSER_HOME=${MYUSER_BASE}/ae \
+    PATH=${DOCKER_BIN_DIR}:${PATH}
+
+ENV MYUSER_LOGS_DIR=${MYUSER_HOME}/logs
+
+RUN \
+    ## Add myuser user and group ## \
+    groupadd -g $MYUSER_USER_ID myuser && \
+    useradd -m -g $MYUSER_USER_ID -u $MYUSER_USER_ID myuser && \
+    ## Create the myuser directory structure ## \
+    mkdir -p $MYUSER_LOGS_DIR && \
+    chown -R myuser:myuser $MYUSER_BASE && \
+    ## Create the docker bin dir ## \
+    mkdir -p $DOCKER_BIN_DIR && \
+    chown -R myuser:myuser $DOCKER_BIN_DIR
+
+WORKDIR $MYUSER_HOME
+
+USER myuser
