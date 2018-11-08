@@ -35,6 +35,8 @@ apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'application'
 
+applicationDefaultJvmArgs = ["-XX:+PreserveFramePointer"]
+
 mainClassName = 'hello.HelloWorld'
 
 // tag::repositories[]
