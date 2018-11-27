@@ -34,6 +34,4 @@ task generateFunctions {
     }
 }
 
-task wrapper(type: Wrapper) {
-    gradleVersion = '3.5'
-}
+wrapper.gradleVersion = 5.0
