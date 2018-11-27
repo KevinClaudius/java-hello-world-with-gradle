@@ -4,32 +4,24 @@ apply plugin: 'application'
 
 applicationDefaultJvmArgs = ["-XX:+PreserveFramePointer"]
 
-mainClassName = 'hello.HelloWorld'
+mainClassName = 'app.Application'
 
-// tag::repositories[]
 repositories {
     mavenCentral()
 }
-// end::repositories[]
 
-// tag::jar[]
 jar {
-    baseName = 'jb-hello-world'
+    baseName = 'java-load-sample-application'
     version =  '0.1.0'
 }
-// end::jar[]
 
-// tag::dependencies[]
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
 
 dependencies {
     testCompile "junit:junit:4.12"
 }
-// end::dependencies[]
 
-// tag::wrapper[]
 task wrapper(type: Wrapper) {
     gradleVersion = '3.5'
 }
-// end::wrapper[]
