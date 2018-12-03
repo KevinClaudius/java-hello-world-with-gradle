@@ -25,7 +25,7 @@ dependencies {
 // Task to generate a deep call stack
 task generateFunctions {
     doLast {
-        250.times { idx ->
+        1500.times { idx ->
             println """
   private static double f${idx}(double x) {
     return f${idx+1}(x);
