@@ -18,6 +18,7 @@ public class Application {
   }
 
   private static double doWork(double x) {
-    return System.nanoTime();
+    //return System.nanoTime();
+    return System.currentTimeMillis();
   }
 }
